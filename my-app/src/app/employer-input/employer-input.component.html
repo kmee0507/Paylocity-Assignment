@@ -1,1 +1,27 @@
-<p>employer-input works!</p>
+<div id="assignment-div">
+  <div class="col-sm-4 col-sm-offset-4" >
+    <h1>Paylocity Assignment</h1>
+    <div class="input-group" *ngIf="!employeeAdded">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">Employee First and Last name</span>
+      </div>
+      <input type="text" placeholder="FirstName" class="form-control" [(ngModel)]="paylocityEmployee.firstName">
+      <input type="text" placeholder="LastName" class="form-control" [(ngModel)]="paylocityEmployee.lastName">
+      &nbsp;
+      <button (click)="onAddClick()"
+      class="btn-secondary">add</button>
+    </div>
+    <div *ngIf="employeeAdded && paylocityEmployee">
+      Current Employee:&nbsp;{{paylocityEmployee.firstName}}&nbsp;{{paylocityEmployee.lastName}}
+    </div>
+  </div>
+
+  <!-- <div class="col-sm-4 col-sm-offset-4">
+    <button (click)="onSubmitClick()"
+  class="btn-primary">
+  Submit
+  </button>
+  </div> -->
+</div>
+
+

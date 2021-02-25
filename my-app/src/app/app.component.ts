@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-app';
+  title = 'Paylocity Assignment';
+  constructor(protected dataService: DataService){}
+
+  submitButtonClicked() {
+    var cost = this.dataService.getCost();
+    console.log(cost);
+  }
+
 }
