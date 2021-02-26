@@ -1,27 +1,67 @@
 <div id="assignment-div">
   <div class="col-sm-4 col-sm-offset-4" >
     <h1>Paylocity Assignment</h1>
-    <div class="input-group" *ngIf="!employeeAdded">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="">Employee First and Last name</span>
+    <form [formGroup]="myForm" novalidate>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">Employee First and Last name</span>
+        </div>
+        <input type="text" placeholder="FirstName" class="form-control" formControlName="employeeFirstName">
+        <input type="text" placeholder="LastName" class="form-control" formControlName="employeeLastName">
       </div>
-      <input type="text" placeholder="FirstName" class="form-control" [(ngModel)]="paylocityEmployee.firstName">
-      <input type="text" placeholder="LastName" class="form-control" [(ngModel)]="paylocityEmployee.lastName">
-      &nbsp;
-      <button (click)="onAddClick()"
-      class="btn-secondary">add</button>
-    </div>
-    <div *ngIf="employeeAdded && paylocityEmployee">
-      Current Employee:&nbsp;{{paylocityEmployee.firstName}}&nbsp;{{paylocityEmployee.lastName}}
+      <div formArrayName="dependents" id="dependent-group-div">
+        <div *ngFor="let dependents of getControls(); let i=index" id="sub-dependent-div">
+          <div>
+            <span>Dependent {{i+1}}</span>
+            <button *ngIf="getControlsLength() > 1" class="btn btn-danger btn-sm" id="remove-button-danger" (click)="removeDependent(i)">x</button>
+          </div>
+          <div [formGroupName]="i">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Dependent First and Last name</span>
+              </div>
+              <input type="text" formControlName="dependentFirstName" placeholder="FirstName" class="form-control">
+              <input type="text" formControlName="dependentLastName" placeholder="LastName" class="form-control">
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div id = "add-save-buttons-div">
+        <button type="button" class = "btn btn-outline-primary" (click)="addDependent()">Add Another Dependent</button>
+        &nbsp;
+        <button type="button" class = "btn btn-outline-secondary" (click)="save()">Save Employee & Dependents</button>
+      </div>
+
+      <div>
+        Employees saved: {{arrayOfPaylocityEmployees.length}}
+        <div *ngFor="let item of arrayOfPaylocityEmployees">
+          Employee: {{item.firstName}}&nbsp;{{item.lastName}}<br/>
+          Dependents: {{item.dependents.length}}
+          <div *ngFor="let dep of item.dependents">
+            Dependent: {{dep.firstName}}&nbsp;{{dep.lastName}}
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    <button (click)="onSubmitClick()"
+    class="btn-primary">
+    Submit
+    </button>
+
+    </form>
+
+    <div id = "cost-div" *ngIf="paylocityCost">
+      <label>Yearly Total: </label> {{paylocityCost.yearlyCost}}<br/>
     </div>
   </div>
 
-  <!-- <div class="col-sm-4 col-sm-offset-4">
-    <button (click)="onSubmitClick()"
-  class="btn-primary">
-  Submit
-  </button>
-  </div> -->
 </div>
 
 

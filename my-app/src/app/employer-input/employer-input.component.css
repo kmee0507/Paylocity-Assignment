@@ -1,0 +1,22 @@
+#dependent-group-div {
+  border: 1px solid #cccccc;
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#sub-dependent-div{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#add-save-buttons-div {
+  margin-top: 5px;
+}
+
+#remove-button-danger {
+  float: right;
+  margin-bottom: 3px;
+  margin-right: 5px;
+
+}
