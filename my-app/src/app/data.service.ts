@@ -12,7 +12,6 @@ export class DataService {
 
   getCost(): Observable<number> {
     const uri = "/controllers/cost/getCost"; //with backend get the cost of employees saved and perhaps save those employees into the database for future reference
-    console.log(uri);
     return this.http.get<number>(uri);
   }
 
@@ -21,6 +20,7 @@ export class DataService {
     return this.http.get<PaylocityEmployee[]>(uri);
   }
 
+  // additional param for get that would specify necessary headers required to access api on backend server
   private getAuthHeaders(): HttpHeaders {
     return new HttpHeaders({
       'content-type': 'application.json'

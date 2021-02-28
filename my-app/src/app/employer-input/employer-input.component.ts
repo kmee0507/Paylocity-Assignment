@@ -224,7 +224,6 @@ export class EmployerInputComponent implements OnInit {
       return true;
     }
     return false;
-
   }
 
 }
