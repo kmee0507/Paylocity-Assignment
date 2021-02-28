@@ -6,8 +6,8 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="">Employee First and Last name</span>
         </div>
-        <input type="text" placeholder="FirstName" class="form-control" formControlName="employeeFirstName">
-        <input type="text" placeholder="LastName" class="form-control" formControlName="employeeLastName">
+        <input type="text" placeholder="FirstName" class="form-control" formControlName="employeeFirstName" required [ngStyle]="requiredFirstNameOutline">
+        <input type="text" placeholder="LastName" class="form-control" formControlName="employeeLastName" required [ngStyle]="requiredLastNameOutline">
       </div>
       <div formArrayName="dependents" id="dependent-group-div">
         <div *ngFor="let dependents of getControls(); let i=index" id="sub-dependent-div">
@@ -51,6 +51,7 @@
 
 
     <button (click)="onSubmitClick()"
+    [hidden]="submitButtonHidden"
     class="btn-primary">
     Submit
     </button>

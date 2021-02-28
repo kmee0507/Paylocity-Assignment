@@ -24,6 +24,9 @@ export class EmployerInputComponent implements OnInit {
   paylocityDependent: PaylocityDependent;
   employeeAdded: boolean = false;
   myForm: FormGroup;
+  submitButtonHidden: boolean = true;
+  requiredFirstNameOutline = {"border-color": ""};
+  requiredLastNameOutline = {"border-color": ""};
 
   constructor(private _fb: FormBuilder) { }
 
@@ -63,28 +66,79 @@ export class EmployerInputComponent implements OnInit {
   }
 
   save() {
-    this.paylocityEmployee = this.createEmployee();
-    this.paylocityEmployee.firstName = this.myForm.controls.employeeFirstName.value;
-    this.paylocityEmployee.lastName = this.myForm.controls.employeeLastName.value;
-    this.paylocityEmployee.startsWithA = this.checkIfStartsWithA(this.paylocityEmployee.firstName, this.paylocityEmployee.lastName);
-    for(var i = 0; i < this.myForm.controls.dependents.value.length;i++)
-    {
-      this.paylocityDependent = this.createDependent();
-      this.paylocityDependent.firstName = this.myForm.controls.dependents.value[i].dependentFirstName;
-      this.paylocityDependent.lastName = this.myForm.controls.dependents.value[i].dependentLastName;
-      this.paylocityDependent.startsWithA = this.checkIfStartsWithA(this.paylocityDependent.firstName, this.paylocityDependent.lastName);
-      this.paylocityEmployee.dependents.push(this.paylocityDependent);
+    var noIssues = this.validate();
+    if(noIssues) {
+      this.paylocityEmployee = this.createEmployee();
+      this.paylocityEmployee.firstName = this.myForm.controls.employeeFirstName.value;
+      this.paylocityEmployee.lastName = this.myForm.controls.employeeLastName.value;
+      this.paylocityEmployee.startsWithA = this.checkIfStartsWithA(this.paylocityEmployee.firstName, this.paylocityEmployee.lastName);
+      if(this.myForm.controls.dependents.value[0].dependentFirstName != "" && this.myForm.controls.dependents.value[0].dependentLastName != ""
+        && this.myForm.controls.dependents.value[0].dependentFirstName != null && this.myForm.controls.dependents.value[0].dependentLastName != null)
+      {
+        for(let i = 0; i < this.myForm.controls.dependents.value.length;i++)
+        {
+          this.paylocityDependent = this.createDependent();
+          this.paylocityDependent.firstName = this.myForm.controls.dependents.value[i].dependentFirstName;
+          this.paylocityDependent.lastName = this.myForm.controls.dependents.value[i].dependentLastName;
+          this.paylocityDependent.startsWithA = this.checkIfStartsWithA(this.paylocityDependent.firstName, this.paylocityDependent.lastName);
+          this.paylocityEmployee.dependents.push(this.paylocityDependent);
+        }
     }
+
     this.arrayOfPaylocityEmployees.push(this.paylocityEmployee);
     this.clearFields();
-    console.log(this.arrayOfPaylocityEmployees);
+    this.submitButtonHidden = false;
+    }
 
+
+  }
+
+  validate(): boolean {
+    if(this.myForm.controls.employeeFirstName.value === null || this.myForm.controls.employeeLastName.value === null) {
+      alert("Must fill in employee first and last name before saving");
+      if(this.myForm.controls.employeeFirstName.value === null && this.myForm.controls.employeeLastName.value === null)
+      {
+        this.requiredFirstNameOutline = {"border-color": "red"};
+        this.requiredLastNameOutline = {"border-color": "red"};
+      }
+      else if(this.myForm.controls.employeeLastName.value === null)
+      {
+        this.requiredLastNameOutline = {"border-color": "red"};
+      }
+      else
+      {
+        this.requiredFirstNameOutline = {"border-color": "red"};
+      }
+      return false;
+    }
+
+    if(this.myForm.controls.employeeFirstName.value.length < 1 || this.myForm.controls.employeeLastName.value.length < 1) {
+      alert("Must fill in employee first and last name before saving");
+      if(this.myForm.controls.employeeFirstName.value.length < 1 && this.myForm.controls.employeeLastName.value.length < 1)
+      {
+        this.requiredFirstNameOutline = {"border-color": "red"};
+        this.requiredLastNameOutline = {"border-color": "red"};
+      }
+      else if(this.myForm.controls.employeeLastName.value < 1)
+      {
+        this.requiredLastNameOutline = {"border-color": "red"};
+      }
+      else
+      {
+        this.requiredFirstNameOutline = {"border-color": "red"};
+      }
+      return false;
+    }
+
+    return true;
   }
 
   clearFields() {
     if(this.myForm.controls.dependents.value.length > 1 ){
       this.removeDependent(this.myForm.controls.dependents.value.length - 1);
     }
+    this.requiredFirstNameOutline = {"border-color": ""};
+    this.requiredLastNameOutline = {"border-color": ""};
     this.myForm.reset();
   }
 
@@ -120,13 +174,15 @@ export class EmployerInputComponent implements OnInit {
     this.paylocityCost.employees = this.arrayOfPaylocityEmployees;
     this.calculateCosts();
     this.submitButtonClicked.emit();
+    this.arrayOfPaylocityEmployees = [];
+    this.submitButtonHidden = true;
   }
 
   calculateCosts(){
     var totalCost = 0.0;
     var currentEmployeeCost = 0.0;
     var currentDependentCost = 0.0;
-    for(var i = 0; i < this.paylocityCost.employees.length; i++) {
+    for(let i = 0; i < this.paylocityCost.employees.length; i++) {
       if(this.paylocityCost.employees[i].startsWithA)
       {
          currentEmployeeCost = this.YEARLYCOST - (this.YEARLYCOST * this.DISCOUNT);
@@ -136,8 +192,9 @@ export class EmployerInputComponent implements OnInit {
         currentEmployeeCost = this.YEARLYCOST;
       }
       totalCost += currentEmployeeCost;
-
-      for(var j = 0; j < this.paylocityCost.employees[i].dependents.length; j++)
+      if(this.paylocityCost.employees[i].dependents.length > 0)
+      {
+        for(let j = 0; j < this.paylocityCost.employees[i].dependents.length; j++)
       {
         if(this.paylocityCost.employees[i].dependents[j].startsWithA)
         {
@@ -149,6 +206,8 @@ export class EmployerInputComponent implements OnInit {
         }
         totalCost += currentDependentCost;
       }
+      }
+
     }
     this.paylocityCost.yearlyCost = totalCost;
   }

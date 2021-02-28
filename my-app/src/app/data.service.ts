@@ -11,9 +11,9 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getCost(): Observable<number> {
-    const uri = "/controllers/cost/getCost";
+    const uri = "/controllers/cost/getCost"; //with backend get the cost of employees saved and perhaps save those employees into the database for future reference
     console.log(uri);
-    return this.http.get<number>(uri );
+    return this.http.get<number>(uri);
   }
 
   getEmployees(): Observable<PaylocityEmployee[]> {
