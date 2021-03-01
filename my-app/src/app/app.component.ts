@@ -22,6 +22,7 @@ export class AppComponent implements OnInit{
     // this.loadEmployees(); would call with api backend
   }
 
+  // will load the employees into the client side for potential autofill and search functionality
   loadEmployees() {
     this.paylocityEmployees = null as any;
     this.dataService.getEmployees().toPromise().then(data => {
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit{
 
   }
 
+  //will get the cost submitted
   submitButtonClicked() {
     var cost = this.dataService.getCost();
     console.log(cost);

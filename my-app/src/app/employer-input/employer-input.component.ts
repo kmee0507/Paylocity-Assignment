@@ -47,6 +47,7 @@ export class EmployerInputComponent implements OnInit {
     })
   }
 
+  // The following functions help to create a reactive form that will increase as dependents are added.  Gives ability to get form and its length and add and remove depedents
   addDependent() {
     const control = <FormArray>this.myForm.controls['dependents'];
     control.push(this.initDepedents());
@@ -65,6 +66,7 @@ export class EmployerInputComponent implements OnInit {
     return (this.myForm.get('dependents') as FormArray).controls.length;
   }
 
+  // The save function will validate the info provided is legit and then save the information into the array of employees for future submission
   save() {
     var noIssues = this.validate();
     if(noIssues) {
@@ -142,6 +144,8 @@ export class EmployerInputComponent implements OnInit {
     this.myForm.reset();
   }
 
+
+  // initialize empty objects functions
   createEmployee(): PaylocityEmployee {
     return {
       firstName: '',
@@ -167,10 +171,11 @@ export class EmployerInputComponent implements OnInit {
     }
   }
 
+  // submit will set the employees and for the meantime calculate the cost on the front end side of things.
+  // TODO with a functional backend one might add the ability to save the employee and dependent on submission for future reference
   onSubmitClick(): void {
     this.paylocityCost = this.createCosts();
     console.log("Submit Clicked");
-    console.log(this.arrayOfPaylocityEmployees);
     this.paylocityCost.employees = this.arrayOfPaylocityEmployees;
     this.calculateCosts();
     this.submitButtonClicked.emit();
