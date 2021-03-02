@@ -59,8 +59,13 @@
     </form>
 
     <div id = "cost-div" *ngIf="paylocityCost">
-      <label>Yearly Total: </label> ${{paylocityCost.yearlyCost}}<br/>
-      <label>Cost Per Paycheck</label> ${{paylocityCost.payCheckCost.toFixed(2)}}<br/>
+
+      <label>Yearly Total for {{paylocityCost.employees.length}} employee(s): </label> ${{paylocityCost.yearlyCost}}<br/>
+      <label>Paycheck Amount:</label><br/>
+      <div *ngFor="let count of paylocityCost.employees; let i = index;">
+        Employee {{i+1}}: ${{paylocityCost.payCheckCost[i].toFixed(2)}}<br/>
+      </div>
+
     </div>
   </div>
 

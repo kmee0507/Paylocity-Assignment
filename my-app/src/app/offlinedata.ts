@@ -23,6 +23,6 @@ export const paylocityCost: PaylocityCost[] = [
   {
     employees: [paylocityEmployee[0]],
     yearlyCost: 0,
-    payCheckCost: 0
+    payCheckCost: []
   }
 ]

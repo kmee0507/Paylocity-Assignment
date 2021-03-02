@@ -167,7 +167,7 @@ export class EmployerInputComponent implements OnInit {
     return{
       employees: [],
       yearlyCost: 0,
-      payCheckCost: 0
+      payCheckCost: []
     }
   }
 
@@ -200,22 +200,22 @@ export class EmployerInputComponent implements OnInit {
       if(this.paylocityCost.employees[i].dependents.length > 0)
       {
         for(let j = 0; j < this.paylocityCost.employees[i].dependents.length; j++)
-      {
-        if(this.paylocityCost.employees[i].dependents[j].startsWithA)
         {
-          currentDependentCost = this.DEPENDENTCOST - (this.DEPENDENTCOST * this.DISCOUNT);
+          if(this.paylocityCost.employees[i].dependents[j].startsWithA)
+          {
+            currentDependentCost = this.DEPENDENTCOST - (this.DEPENDENTCOST * this.DISCOUNT);
+          }
+          else
+          {
+            currentDependentCost = this.DEPENDENTCOST;
+          }
+          totalCost += currentDependentCost;
         }
-        else
-        {
-          currentDependentCost = this.DEPENDENTCOST;
-        }
-        totalCost += currentDependentCost;
       }
-      }
-
+      this.paylocityCost.yearlyCost += totalCost;
+      this.paylocityCost.payCheckCost[i] = (this.PAYCHECKAMOUNT - (totalCost / this.NUMBEROFPAYCHECKS));
+      totalCost = 0;
     }
-    this.paylocityCost.yearlyCost = totalCost;
-    this.paylocityCost.payCheckCost = (this.PAYCHECKAMOUNT - (this.paylocityCost.yearlyCost / this.NUMBEROFPAYCHECKS));
 
   }
 
