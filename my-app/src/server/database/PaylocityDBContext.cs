@@ -8,7 +8,7 @@ public class PaylocityDBContext {
   }
 
   public EmployeeModel retrieveEmployeesFromDB() {
-    SQLParameter[] parameters = EmployeeModel.BuildParametersForEmployee();
+    SqlParameter[] parameters = EmployeeModel.BuildParametersForEmployee();
     Database.ExecuteSqlCommand("EXEC dbo.GetEmployeesList", parameters);
     var employeeList = EmployeeModel.PopulateEmployeeListObject(parameters);
   }

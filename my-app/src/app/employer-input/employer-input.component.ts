@@ -11,12 +11,14 @@ import { PaylocityEmployee } from '../models/paylocityEmployee.model';
 })
 export class EmployerInputComponent implements OnInit {
 
+  //constants
   YEARLYCOST: number = 1000.00;
   PAYCHECKAMOUNT: number = 2000.00;
   NUMBEROFPAYCHECKS: number = 26;
   DEPENDENTCOST: number = 500.00;
   DISCOUNT: number = 0.1;
 
+  // component variables
   paylocityCost: PaylocityCost;
   @Output() submitButtonClicked = new EventEmitter();
   paylocityEmployee: PaylocityEmployee
@@ -32,8 +34,8 @@ export class EmployerInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this._fb.group({
-      employeeFirstName: ['', [Validators.required]],
-      employeeLastName: ['', [Validators.required]],
+      employeeFirstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      employeeLastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
       dependents: this._fb.array([
         this.initDepedents()
       ])
@@ -64,6 +66,17 @@ export class EmployerInputComponent implements OnInit {
 
   getControlsLength() {
     return (this.myForm.get('dependents') as FormArray).controls.length;
+  }
+
+  restrictInput(event: any) {
+    var charCode = event.keyCode;
+    if((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8)
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   // The save function will validate the info provided is legit and then save the information into the array of employees for future submission
@@ -137,7 +150,11 @@ export class EmployerInputComponent implements OnInit {
 
   clearFields() {
     if(this.myForm.controls.dependents.value.length > 1 ){
-      this.removeDependent(this.myForm.controls.dependents.value.length - 1);
+      for(let i = this.myForm.controls.dependents.value.length - 1; i>0; i--)
+      {
+        this.removeDependent(i);
+      }
+
     }
     this.requiredFirstNameOutline = {"border-color": ""};
     this.requiredLastNameOutline = {"border-color": ""};
@@ -181,6 +198,7 @@ export class EmployerInputComponent implements OnInit {
     this.submitButtonClicked.emit();
     this.arrayOfPaylocityEmployees = [];
     this.submitButtonHidden = true;
+    this.clearFields();
   }
 
   calculateCosts(){

@@ -39,9 +39,9 @@ describe('EmployerInputComponent', () => {
 
   it('create employee', () => {
     component.createEmployee()
-    expect(component.paylocityEmployee.firstName).toEqual('');
-    expect(component.paylocityEmployee.lastName).toEqual('');
-    expect(component.paylocityEmployee.startsWithA).toEqual(false);
+    expect(component.paylocityEmployee.firstName).toEqual('test');
+    expect(component.paylocityEmployee.lastName).toEqual('aTest');
+    expect(component.paylocityEmployee.startsWithA).toEqual(true);
   })
 
   it('create save', () => {
@@ -51,6 +51,6 @@ describe('EmployerInputComponent', () => {
 
   it('create calculateCost', () => {
     component.calculateCosts();
-    expect(component.paylocityCost.yearlyCost).toEqual(1300);
+    expect(component.paylocityCost.yearlyCost).toEqual(1400);
   })
 });

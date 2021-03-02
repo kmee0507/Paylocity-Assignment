@@ -18,5 +18,36 @@
   float: right;
   margin-bottom: 3px;
   margin-right: 5px;
+}
 
+#cost-div {
+  border: 1px solid #cccccc;
+  margin-top: 10px;
+  border-radius: 3px;
+}
+
+.cost-span {
+  color: green;
+}
+
+.small-info-span {
+  font-size: 10px;
+  vertical-align: middle;
+  color: red;
+}
+
+input:hover {
+  cursor: text;
+}
+
+.input-group-prepend:hover {
+  cursor: default;
+}
+
+.saved-employee-label {
+  border-top: 1px solid #cccccc;
+}
+
+#submit-button-div {
+  margin-top: 5px;
 }

@@ -8,17 +8,17 @@ public class EmployeeModel : PersonModel {
   public bool startsWithA;
 
   public static void BuildParametersForEmployee() {
-    SQLParameter[] parameters = new SQLParameter[]
+    SqlParameter[] parameters = new SqlParameter[]
     {
-      new SQLParameter("@FirstName", SqlDbType.VarChar, 255)
+      new SqlParameter("@FirstName", SqlDbType.VarChar, 255)
       {
         Direction = ParameterDirection.Output;
       }
-      new SQLParameter("@LastName", SqlDbType.VarChar, 255)
+      new SqlParameter("@LastName", SqlDbType.VarChar, 255)
       {
         Direction = ParameterDirection.Output;
       }
-      new SQLParameter("@StartsWithA", SqlDbType.VarChar, 1)
+      new SqlParameter("@StartsWithA", SqlDbType.VarChar, 1)
       {
         Direction = ParameterDirection.Output;
       }
