@@ -1,3 +1,7 @@
+using System.Web.Mvc;
+using System.Data.SqlClient;
+using System.Data;
+
 public class PaylocityDBContext {
   PaylocityDBContext() {
     Database.start()
