@@ -1,4 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { paylocityCost, paylocityDependent, paylocityEmployee } from '../offlinedata';
 
 import { EmployerInputComponent } from './employer-input.component';
@@ -9,6 +13,12 @@ describe('EmployerInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
       declarations: [ EmployerInputComponent ]
     })
     .compileComponents();
