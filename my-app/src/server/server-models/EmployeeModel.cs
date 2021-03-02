@@ -2,7 +2,7 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 
-using DependentModel
+using DependentModel;
 
 public class EmployeeModel : PersonModel {
   public bool startsWithA;

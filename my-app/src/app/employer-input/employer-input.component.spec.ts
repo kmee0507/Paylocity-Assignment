@@ -28,7 +28,6 @@ describe('EmployerInputComponent', () => {
   });
 
   it('create employee', () => {
-    console.log = jest.fn();
     component.createEmployee()
     expect(component.paylocityEmployee.firstName).toEqual('');
     expect(component.paylocityEmployee.lastName).toEqual('');
@@ -41,7 +40,6 @@ describe('EmployerInputComponent', () => {
   })
 
   it('create calculateCost', () => {
-    console.log = jest.fn();
     component.calculateCosts();
     expect(component.paylocityCost.yearlyCost).toEqual(1300);
   })
