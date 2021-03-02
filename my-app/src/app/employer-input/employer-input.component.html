@@ -59,7 +59,8 @@
     </form>
 
     <div id = "cost-div" *ngIf="paylocityCost">
-      <label>Yearly Total: </label> {{paylocityCost.yearlyCost}}<br/>
+      <label>Yearly Total: </label> ${{paylocityCost.yearlyCost}}<br/>
+      <label>Cost Per Paycheck</label> ${{paylocityCost.payCheckCost.toFixed(2)}}<br/>
     </div>
   </div>
 

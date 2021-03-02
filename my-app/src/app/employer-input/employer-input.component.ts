@@ -215,6 +215,8 @@ export class EmployerInputComponent implements OnInit {
 
     }
     this.paylocityCost.yearlyCost = totalCost;
+    this.paylocityCost.payCheckCost = (this.PAYCHECKAMOUNT - (this.paylocityCost.yearlyCost / this.NUMBEROFPAYCHECKS));
+
   }
 
   onAddClick(): void {
